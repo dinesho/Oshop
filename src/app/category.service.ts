@@ -18,16 +18,4 @@ export class CategoryService {
         )
       );
   }
-
-  //   constructor(db: AngularFireDatabase) {
-  //     this.itemsRef = db.list("messages");
-  //     // Use snapshotChanges().map() to store the key
-  //     this.items = this.itemsRef
-  //       .snapshotChanges()
-  //       .pipe(
-  //         map(changes =>
-  //           changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-  //         )
-  //       );
-  //   }
 }
