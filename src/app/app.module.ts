@@ -18,6 +18,8 @@ import { MyOrderComponent } from "./my-order/my-order.component";
 import { AdminProductsComponent } from "./admin/admin-products/admin-products.component";
 import { AdminOrdersComponent } from "./admin/admin-orders/admin-orders.component";
 import { LoginComponent } from "./login/login.component";
+import { AuthService } from "./auth.service";
+import { AuthGuardService as AuthGuard } from "./auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -43,16 +45,37 @@ import { LoginComponent } from "./login/login.component";
       { path: "", component: HomeComponent },
       { path: "products", component: ProductsComponent },
       { path: "shopping-cart", component: ShoppingCartComponent },
-      { path: "checkout", component: CheckoutComponent },
-      { path: "order-success", component: OrderSuccessComponent },
-      { path: "my/orders", component: MyOrderComponent },
       { path: "login", component: LoginComponent },
-      { path: "admin/products", component: AdminProductsComponent },
-      { path: "admin/orders", component: AdminOrdersComponent },
+      {
+        path: "checkout",
+        component: CheckoutComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "order-success",
+        component: OrderSuccessComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "my/orders",
+        component: MyOrderComponent,
+        canActivate: [AuthGuard]
+      },
+
+      {
+        path: "admin/products",
+        component: AdminProductsComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "admin/orders",
+        component: AdminOrdersComponent,
+        canActivate: [AuthGuard]
+      },
       { path: "**", component: HomeComponent }
     ])
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent],
   exports: [RouterModule]
 })
