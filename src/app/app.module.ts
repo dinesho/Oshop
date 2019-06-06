@@ -85,6 +85,10 @@ import { ProductService } from "./product.service";
         path: "admin/product/new",
         component: ProductFormComponent
       },
+      {
+        path: "admin/product/:id",
+        component: ProductFormComponent
+      },
       { path: "**", component: HomeComponent }
     ])
   ],
