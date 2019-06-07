@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 export class ProductFormComponent implements OnInit {
   categories$;
   product;
+  id;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,11 +20,11 @@ export class ProductFormComponent implements OnInit {
     private productService: ProductService
   ) {
     this.categories$ = categoryService.getCategories();
-    let id = this.route.snapshot.paramMap.get("id");
+    this.id = this.route.snapshot.paramMap.get("id");
 
-    if (id) {
+    if (this.id) {
       this.productService
-        .get(id)
+        .get(this.id)
         .snapshotChanges()
         .subscribe(p => {
           this.product = p;
@@ -32,9 +33,19 @@ export class ProductFormComponent implements OnInit {
   }
 
   save(product) {
-    this.productService.create(product);
+    if (this.id) {
+      this.productService.update(this.id, product);
+    } else {
+      this.productService.create(product);
+    }
     this.router.navigate(["/admin/products"]);
   }
 
+  delete() {
+    if (confirm("Do you want to delete this?")) {
+      this.productService.delete(this.id);
+      this.router.navigate(["/admin/products"]);
+    }
+  }
   ngOnInit() {}
 }
